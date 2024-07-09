@@ -1,14 +1,14 @@
 {
   "name": "simple-semantic-search-js",
-  "version": "1.0.4",
+  "version": "1.0.7",
   "type": "module",
+  "main": "./src/index.js",
   "exports": {
-    "node": "./src/node.js",
-    "browser": "./src/browser.js",
-    "default": "./src/node.js"
+    ".": "./src/index.js"
   },
   "files": [
-    "src"
+    "src",
+    "!data"
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

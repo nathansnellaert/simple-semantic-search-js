@@ -59,16 +59,32 @@ class Search {
         }));
     }
 
-    // noob placeholder implementation
-    search(query, topK = 5) {
-        const queryWords = new Map(normalizeText(query).split(' ').map(word => [word, 0]));
-        const extendedQueryWords = new Map(queryWords);
+    findPartialMatches(partialWord) {
+        const matches = new Set();
+        for (const doc of this.index) {
+            for (const word of doc.words.keys()) {
+                if (word.includes(partialWord)) {
+                    matches.add(word);
+                }
+            }
+        }
+        return matches;
+    }
+
+    // dummy impl
+    search(query, topK = 5, usePartialMatch = false) {
+        const queryWords = normalizeText(query).split(' ');
+        const extendedQueryWords = new Map();
         
-        for (const [word] of queryWords) {
-            const neighbors = getExtendedNeighbors(this.wordGraph, word, this.maxDepth);
-            for (const [neighbor, depth] of neighbors) {
-                if (!extendedQueryWords.has(neighbor) || extendedQueryWords.get(neighbor) > depth) {
-                    extendedQueryWords.set(neighbor, depth);
+        for (const word of queryWords) {
+            const wordsToProcess = usePartialMatch ? this.findPartialMatches(word) : [word];
+            for (const matchedWord of wordsToProcess) {
+                extendedQueryWords.set(matchedWord, 0);
+                const neighbors = getExtendedNeighbors(this.wordGraph, matchedWord, this.maxDepth);
+                for (const [neighbor, depth] of neighbors) {
+                    if (!extendedQueryWords.has(neighbor) || extendedQueryWords.get(neighbor) > depth) {
+                        extendedQueryWords.set(neighbor, depth);
+                    }
                 }
             }
         }
