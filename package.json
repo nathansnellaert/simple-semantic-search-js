@@ -1,0 +1,22 @@
+{
+  "name": "simple-semantic-search-js",
+  "version": "1.0.4",
+  "type": "module",
+  "exports": {
+    "node": "./src/node.js",
+    "browser": "./src/browser.js",
+    "default": "./src/node.js"
+  },
+  "files": [
+    "src"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
